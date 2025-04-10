@@ -23,9 +23,7 @@ def lab_1():
 
     watsonx_llm = WatsonxLLM(
         model_id="ibm/granite-13b-instruct-v2",
-        url=os.getenv("WATSONX_API_ENDPOINT"),
         project_id=os.getenv("WATSONX_PROJECT_ID"),
-        apikey=os.getenv("WATSONX_API_KEY"),
         params=parameters,
     )
 
