@@ -28,11 +28,17 @@ async def main() -> None:
         "ollama:llama3.1",
         ChatModelParameters(temperature=0),
     )
-    agent = ReActAgent(llm=llm, tools=[OpenMeteoTool(), WikipediaTool()],
-                       memory=UnconstrainedMemory())
+    agent = ReActAgent(
+        llm=llm, tools=[OpenMeteoTool(), WikipediaTool()], memory=UnconstrainedMemory()
+    )
 
-    output: ReActAgentRunOutput = await agent.run("What's the current weather in Sderot? and what the current population in there?").on(
-        "update", lambda data, event: print(f"Agent({data.update.key}) 🤖 : ", data.update.parsed_value)
+    output: ReActAgentRunOutput = await agent.run(
+        "What's the current weather in Sderot? and what the current population in there?"
+    ).on(
+        "update",
+        lambda data, event: print(
+            f"Agent({data.update.key}) 🤖 : ", data.update.parsed_value
+        ),
     )
 
     print("Agent 🤖 : ", output.result.text)
