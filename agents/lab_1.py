@@ -1,17 +1,45 @@
+import os
+from typing import List
 from dotenv import load_dotenv
 import asyncio
 import sys
 import traceback
 import argparse
 
+from mcp import ClientSession, StdioServerParameters
+from mcp.client.stdio import stdio_client
 from beeai_framework.agents.react import ReActAgent, ReActAgentRunOutput
 from beeai_framework.backend import ChatModel, ChatModelParameters
 from beeai_framework.errors import FrameworkError
 from beeai_framework.memory import UnconstrainedMemory
+from beeai_framework.tools.mcp import MCPTool
 from beeai_framework.tools.weather import OpenMeteoTool
-from beeai_framework.tools.search.wikipedia import WikipediaTool
+from beeai_framework.agents import AgentExecutionConfig
 
 load_dotenv()
+
+
+# Create VT mcp server parameters
+vt_mcp_server_params = StdioServerParameters(
+    command="mcp-virustotal",
+    env={
+        "VIRUSTOTAL_API_KEY": os.environ["VIRUSTOTAL_API_KEY"],
+    },
+)
+
+
+async def vt_tools() -> List[MCPTool]:
+    async with stdio_client(vt_mcp_server_params) as (read, write), ClientSession(
+        read, write
+    ) as session:
+        await session.initialize()
+        tools = await MCPTool.from_client(session)
+
+        # List the tools available
+        print("Available tools:")
+        for tool in tools:
+            print(f"Tool: {tool.name} - {tool.description}")
+        return tools
 
 
 async def main(prompt: str) -> None:
@@ -26,14 +54,21 @@ async def main(prompt: str) -> None:
     # with Ollama, ensure the model is pulled before running.
     # with watsonx.ai, ensure relevant ENV is set.
     llm = ChatModel.from_name(
-        "ollama:llama3.1",
+        "watsonx:meta-llama/llama-3-3-70b-instruct",
         ChatModelParameters(temperature=0),
     )
     agent = ReActAgent(
-        llm=llm, tools=[OpenMeteoTool(), WikipediaTool()], memory=UnconstrainedMemory()
+        llm=llm,
+        tools=[OpenMeteoTool()] + await vt_tools(),
+        memory=UnconstrainedMemory(),
     )
 
-    output: ReActAgentRunOutput = await agent.run(prompt).on(
+    output: ReActAgentRunOutput = await agent.run(
+        prompt=prompt,
+        execution=AgentExecutionConfig(
+            max_retries_per_step=3, total_max_retries=10, max_iterations=20
+        ),
+    ).on(
         "update",
         lambda data, event: print(
             f"Agent({data.update.key}) 🤖 : ", data.update.parsed_value
