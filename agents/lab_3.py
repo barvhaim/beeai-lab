@@ -4,7 +4,6 @@ from dotenv import load_dotenv
 import asyncio
 import sys
 import traceback
-import argparse
 
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
@@ -21,19 +20,15 @@ load_dotenv()
 # Create MCP server parameters
 server_params = StdioServerParameters(
     command="npx",
-    args=["-y", "@burtthecoder/mcp-virustotal"],
+    args=["-y", "tavily-mcp"],
     env={
-        "VIRUSTOTAL_API_KEY": os.environ["VIRUSTOTAL_API_KEY"],
+        "TAVILY_API_KEY": os.environ["TAVILY_API_KEY"],
     },
 )
 
 
-async def get_vt_tools(session: ClientSession) -> List[MCPTool]:
-    tools = await MCPTool.from_client(session)
-    filtered_tools = [
-        tool for tool in tools if tool.name.lower() in ["get_domain_report", "get_ip_report"]
-    ]
-    return filtered_tools
+async def get_tavily_tools(session: ClientSession) -> List[MCPTool]:
+    return await MCPTool.from_client(session)
 
 
 async def create_agent(session: ClientSession) -> ReActAgent:
@@ -50,17 +45,17 @@ async def create_agent(session: ClientSession) -> ReActAgent:
         ChatModelParameters(temperature=0),
     )
 
-    vt_tools = await get_vt_tools(session)
+    tavily_tools = await get_tavily_tools(session)
 
     agent = ReActAgent(
         llm=llm,
-        tools=vt_tools,
+        tools=tavily_tools,
         memory=UnconstrainedMemory(),
     )
     return agent
 
 
-async def main(prompt: str) -> None:
+async def main() -> None:
     """
     Example of using the ReAct agent with a weather tool and a Wikipedia search tool.
     :param prompt: The prompt to provide to the agent.
@@ -70,7 +65,7 @@ async def main(prompt: str) -> None:
         await session.initialize()
         agent = await create_agent(session)
         output: ReActAgentRunOutput = await agent.run(
-            prompt=prompt,
+            prompt="How many times has the word 'the' appeared in this text?",
             execution=AgentExecutionConfig(
                 max_retries_per_step=3, total_max_retries=10, max_iterations=20
             ),
@@ -84,14 +79,8 @@ async def main(prompt: str) -> None:
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-        description="Run the ReAct agent with a custom prompt."
-    )
-    parser.add_argument("prompt", type=str, help="The prompt to provide to the agent.")
-    args = parser.parse_args()
-
     try:
-        asyncio.run(main(args.prompt))
+        asyncio.run(main())
     except FrameworkError as e:
         traceback.print_exc()
         sys.exit(e.explain())

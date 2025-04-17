@@ -21,19 +21,15 @@ load_dotenv()
 # Create MCP server parameters
 server_params = StdioServerParameters(
     command="npx",
-    args=["-y", "@burtthecoder/mcp-virustotal"],
+    args=["-y", "tavily-mcp"],
     env={
-        "VIRUSTOTAL_API_KEY": os.environ["VIRUSTOTAL_API_KEY"],
+        "TAVILY_API_KEY": os.environ["TAVILY_API_KEY"],
     },
 )
 
 
-async def get_vt_tools(session: ClientSession) -> List[MCPTool]:
-    tools = await MCPTool.from_client(session)
-    filtered_tools = [
-        tool for tool in tools if tool.name.lower() in ["get_domain_report", "get_ip_report"]
-    ]
-    return filtered_tools
+async def get_tavily_tools(session: ClientSession) -> List[MCPTool]:
+    return await MCPTool.from_client(session)
 
 
 async def create_agent(session: ClientSession) -> ReActAgent:
@@ -50,11 +46,11 @@ async def create_agent(session: ClientSession) -> ReActAgent:
         ChatModelParameters(temperature=0),
     )
 
-    vt_tools = await get_vt_tools(session)
+    tavily_tools = await get_tavily_tools(session)
 
     agent = ReActAgent(
         llm=llm,
-        tools=vt_tools,
+        tools=tavily_tools,
         memory=UnconstrainedMemory(),
     )
     return agent
