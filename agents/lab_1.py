@@ -31,7 +31,9 @@ server_params = StdioServerParameters(
 async def get_vt_tools(session: ClientSession) -> List[MCPTool]:
     tools = await MCPTool.from_client(session)
     filtered_tools = [
-        tool for tool in tools if tool.name.lower() in ["get_domain_report", "get_ip_report"]
+        tool
+        for tool in tools
+        if tool.name.lower() in ["get_domain_report", "get_ip_report"]
     ]
     return filtered_tools
 
@@ -66,7 +68,9 @@ async def main(prompt: str) -> None:
     :param prompt: The prompt to provide to the agent.
     """
 
-    async with stdio_client(server_params) as (read, write), ClientSession(read, write) as session:
+    async with stdio_client(server_params) as (read, write), ClientSession(
+        read, write
+    ) as session:
         await session.initialize()
         agent = await create_agent(session)
         output: ReActAgentRunOutput = await agent.run(

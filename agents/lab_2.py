@@ -62,7 +62,9 @@ async def main(prompt: str) -> None:
     :param prompt: The prompt to provide to the agent.
     """
 
-    async with stdio_client(server_params) as (read, write), ClientSession(read, write) as session:
+    async with stdio_client(server_params) as (read, write), ClientSession(
+        read, write
+    ) as session:
         await session.initialize()
         agent = await create_agent(session)
         output: ReActAgentRunOutput = await agent.run(
