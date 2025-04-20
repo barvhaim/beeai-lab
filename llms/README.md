@@ -21,6 +21,10 @@ LLMs are generally more powerful and capable of generating high-quality text, wh
 - Top-k - This parameter limits the sampling pool to the top k most probable words. For instance, if k=50, the model will only consider the 50 most likely words for generating the next token.
 - Max tokens - This parameter sets the maximum number of tokens (words or subwords) that the model can generate in a single response. For example, if max tokens=100, the model will stop generating text after producing 100 tokens.
 
+## Labs
+- [Lab 0](./lab_0.py) - **Sanity check for watsonx.ai LLM**: This lab demonstrates a basic invocation of the watsonx.ai LLM to ensure it is running correctly.
+- [Lab 1](./lab_1.py) - **Country information retrieval**: This lab uses a prompt template to retrieve information about a country (capital and population) in JSON format.
+- [Lab 2](./lab_2.py) - **Summarizing CTI reports**: This lab uses a CTI report as input and generates a structured JSON summary using a prompt template and output parser.
 
 ### References
 - ["Attention is All You Need" paper](https://arxiv.org/abs/1706.03762)
@@ -30,3 +34,4 @@ LLMs are generally more powerful and capable of generating high-quality text, wh
 - [watsonx.ai](https://watsonx.ai/)
 - [Prompting guide](https://www.promptingguide.ai)
 - [HuggingFace](https://huggingface.co/)
+
