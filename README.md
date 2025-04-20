@@ -40,5 +40,3 @@ This project explores the intersection of Large Language Models (LLMs), IBM wats
 Run the relevant example:
 * [📖 LLMs](llms/README.md)
 * [🤖 AI Agents with BeeAI](agents/README.md)
-
-`
