@@ -1,20 +1,38 @@
+import os
+from typing import List
 from dotenv import load_dotenv
 import asyncio
 import sys
 import traceback
 import argparse
 
+from mcp import ClientSession, StdioServerParameters
+from mcp.client.stdio import stdio_client
 from beeai_framework.agents.react import ReActAgent, ReActAgentRunOutput
 from beeai_framework.backend import ChatModel, ChatModelParameters
 from beeai_framework.errors import FrameworkError
 from beeai_framework.memory import UnconstrainedMemory
+from beeai_framework.tools.mcp import MCPTool
 from beeai_framework.agents import AgentExecutionConfig
-from custom_tools.ti_tool import ThreatIntelligenceTool
 
 load_dotenv()
 
 
-def create_agent() -> ReActAgent:
+# Create MCP server parameters
+server_params = StdioServerParameters(
+    command="npx",
+    args=["-y", "tavily-mcp"],
+    env={
+        "TAVILY_API_KEY": os.environ["TAVILY_API_KEY"],
+    },
+)
+
+
+async def get_tavily_tools(session: ClientSession) -> List[MCPTool]:
+    return await MCPTool.from_client(session)
+
+
+async def create_agent(session: ClientSession) -> ReActAgent:
     """Create and configure the agent with tools and LLM"""
     # Other models to try:
     # "ollama:llama3.1"
@@ -28,11 +46,11 @@ def create_agent() -> ReActAgent:
         ChatModelParameters(temperature=0),
     )
 
-    ti_tool = ThreatIntelligenceTool()
+    tavily_tools = await get_tavily_tools(session)
 
     agent = ReActAgent(
         llm=llm,
-        tools=[ti_tool],
+        tools=tavily_tools,
         memory=UnconstrainedMemory(),
     )
     return agent
@@ -43,19 +61,24 @@ async def main(prompt: str) -> None:
     Example of using the ReAct agent with a weather tool and a Wikipedia search tool.
     :param prompt: The prompt to provide to the agent.
     """
-    agent = create_agent()
-    output: ReActAgentRunOutput = await agent.run(
-        prompt=prompt,
-        execution=AgentExecutionConfig(
-            max_retries_per_step=3, total_max_retries=3, max_iterations=20
-        ),
-    ).on(
-        "update",
-        lambda data, event: print(
-            f"Agent({data.update.key}) 🤖 : ", data.update.parsed_value
-        ),
-    )
-    print("Agent 🤖 : ", output.result.text)
+
+    async with stdio_client(server_params) as (read, write), ClientSession(
+        read, write
+    ) as session:
+        await session.initialize()
+        agent = await create_agent(session)
+        output: ReActAgentRunOutput = await agent.run(
+            prompt=prompt,
+            execution=AgentExecutionConfig(
+                max_retries_per_step=3, total_max_retries=10, max_iterations=20
+            ),
+        ).on(
+            "update",
+            lambda data, event: print(
+                f"Agent({data.update.key}) 🤖 : ", data.update.parsed_value
+            ),
+        )
+        print("Agent 🤖 : ", output.result.text)
 
 
 if __name__ == "__main__":
