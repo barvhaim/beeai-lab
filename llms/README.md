@@ -1,32 +1,32 @@
-# Explore LLMs 🤖
+# 🤖 Explore LLMs
 With `watsonx.ai` and `LangChain` 
 
-## LLMs
-### How it works
+## 📚 LLMs
+### ⚙️ How it works
 LLMs are a type of neural network architecture that uses self-attention mechanisms to process and generate text. They are trained on large datasets to learn the statistical properties of language, allowing them to generate coherent and contextually relevant text.
 
-### LLMs vs SLMs
+### ⚖️ LLMs vs SLMs
 LLMs (Large Language Models) are designed to handle a wide range of tasks and can generate text in a more flexible and creative manner. They are typically trained on vast amounts of data and can understand context, nuances, and even humor.
 
 SLMs (Small Language Models) are smaller and more specialized models that are often used for specific tasks. They may not have the same level of flexibility or creativity as LLMs, but they can be more efficient and faster for certain applications.
 
 LLMs are generally more powerful and capable of generating high-quality text, while SLMs are more focused on specific tasks and may be more efficient in those areas.
 
-### Getting started with watsonx.ai prompt lab
-#### Set-up your account
+### 🚀 Getting started with watsonx.ai prompt lab
+#### 🛠️ Set-up your account
 - Create an account on [watsonx.ai](https://watsonx.ai/)
-#### LLMs configuration explained
+#### 🔧 LLMs configuration explained
 - Temperature - Controls the randomness of the model's output. A higher temperature (e.g., 1.0) results in more random outputs, while a lower temperature (e.g., 0.2) makes the output more deterministic.
 - Top-p (nucleus sampling) - This parameter controls the diversity of the generated text. It considers the smallest set of words whose cumulative probability exceeds the threshold p. For example, if p=0.9, the model will sample from the top 90% of the probability mass.
 - Top-k - This parameter limits the sampling pool to the top k most probable words. For instance, if k=50, the model will only consider the 50 most likely words for generating the next token.
 - Max tokens - This parameter sets the maximum number of tokens (words or subwords) that the model can generate in a single response. For example, if max tokens=100, the model will stop generating text after producing 100 tokens.
 
-## Labs
+## 🧪 Labs
 - [Lab 0](./lab_0.py) - **Sanity check for watsonx.ai LLM**: This lab demonstrates a basic invocation of the watsonx.ai LLM to ensure it is running correctly.
 - [Lab 1](./lab_1.py) - **Country information retrieval**: This lab uses a prompt template to retrieve information about a country (capital and population) in JSON format.
 - [Lab 2](./lab_2.py) - **Summarizing CTI reports**: This lab uses a CTI report as input and generates a structured JSON summary using a prompt template and output parser.
 
-### References
+### 📖 References
 - ["Attention is All You Need" paper](https://arxiv.org/abs/1706.03762)
 - [LLMs leaderboard](https://llm-stats.com)
 - [LLM visualization](https://poloclub.github.io/transformer-explainer/)
