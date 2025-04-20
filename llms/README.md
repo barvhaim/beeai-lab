@@ -28,7 +28,7 @@ LLMs are generally more powerful and capable of generating high-quality text, wh
 - [Lab 2](./lab_2.py) - **Summarizing CTI reports**: This lab uses a CTI report as input and generates a structured JSON summary using a prompt template and output parser.
 - [Lab 3](./lab_3.py) - **Chained prompts for contextual queries**: This lab demonstrates the use of chained prompts to answer contextual queries, such as determining a person's city of origin and the country of that city in a specified language.
 
-### 📖 References
+## 📖 References
 - ["Attention is All You Need" paper](https://arxiv.org/abs/1706.03762)
 - [LLMs leaderboard](https://llm-stats.com)
 - [LLM visualization](https://poloclub.github.io/transformer-explainer/)
