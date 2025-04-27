@@ -7,6 +7,10 @@ Based on https://github.com/i-am-bee
 * **BeeAI framework** - A production-grade framework for building AI agents in either Python or TypeScript. 
 * **Agent Communication Protocol (ACP)** - The standard for agent-to-agent communication, built for automation, collaboration, and UI integration.
 
+
+## 📚 Introduction with Agent Lab
+https://www.ibm.com/docs/en/watsonx/saas?topic=solutions-agent-lab-beta
+
 ## 🧪 Labs
 - [Lab 0](./lab_0.py) - Demonstrates the use of the ReAct agent with weather and Wikipedia tools.
 - [Lab 1.1](./lab_1_1.py) - Integrates the ReAct agent with VirusTotal tools using MCP for domain and IP analysis.
