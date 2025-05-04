@@ -53,3 +53,8 @@ beeai list
 # Run the chat agent
 beeai run chat
 ```
+
+### Litellm + BeeAI config
+- URL: http://localhost:4000
+- API Key: `dummy`
+- Model: `meta-llama/llama-3-3-70b-instruct`
