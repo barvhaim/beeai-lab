@@ -19,3 +19,37 @@ https://www.ibm.com/docs/en/watsonx/saas?topic=solutions-agent-lab-beta
 - [Lab 3](./lab_3.md) - Work in progress. BeeAI is rebuilding their agent SDK. [GitHub link](https://github.com/barvhaim/beeai-demo-agent)
 - [Lab 4](./lab_4.py) - Implements a multi-agent workflow for research, weather forecasting, and data synthesis.
 
+
+## BeeAI platform
+0. Start [Ollama](https://ollama.com/)
+1. **Install** BeeAI using [Homebrew](https://brew.sh/) (or see the [installation guide](https://docs.beeai.dev/introduction/installation) for other methods):
+
+```sh
+brew install i-am-bee/beeai/beeai
+brew services start beeai
+```
+
+2. **Configure** LLM provider:
+
+```sh
+beeai env setup
+```
+
+3. **Launch** the web interface:
+
+```sh
+beeai ui
+```
+
+4. **Use** from the terminal:
+
+```sh
+# List commands
+beeai --help
+
+# List all available agents
+beeai list
+
+# Run the chat agent
+beeai run chat
+```
