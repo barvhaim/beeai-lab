@@ -12,8 +12,9 @@ This project explores the intersection of Large Language Models (LLMs), IBM wats
 - 🛠️ Tools for experimentation and prototyping.
 
 ## ✅ Requirements
-- Unix-like OS (Linux, macOS)
-- Python 3.11 or higher
+- Unix-like OS as Linux, macOS (Not tested on Windows with WSL yet).
+- Python 3.11 or higher.
+- `uv` package manager - [Installation](https://github.com/astral-sh/uv?tab=readme-ov-file#installation) 
 - watsonx.ai API key (optional, or use local LLMs with Ollama)
 - Ollama (optional) - [Installation](https://ollama.com)
 - BeeAI platform (optional) - [Installation](https://github.com/i-am-bee/beeai-platform?tab=readme-ov-file#quickstart) 
@@ -24,21 +25,12 @@ This project explores the intersection of Large Language Models (LLMs), IBM wats
    git clone https://github.com/barvhaim/beeai-lab.git
    cd beeai-lab
    ```
-2. Virtual Environment (optional but recommended):
+2. Create a virtual environment:
    ```bash
-   python -m venv venv
-   source venv/bin/activate
+   uv sync
    ```
-3. LLM and watsonx dependencies (skip if not needed):
-   ```bash
-   make install-llms-deps
-   ```
-4. AI Agents dependencies (skip if not needed):
-   ```bash
-   make install-agents-deps
-   ```
-   
+
 ## 🚀 Usage
 Run the relevant example:
-* [📖 LLMs](llms/README.md)
-* [🤖 AI Agents with BeeAI](agents/README.md)
+* [📖 LLMs](llms_101/README.md)
+* [🤖 AI Agents with BeeAI](agents_101/README.md)

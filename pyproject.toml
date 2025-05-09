@@ -1,0 +1,13 @@
+[project]
+name = "beeai-lab"
+version = "0.1.0"
+description = "Learning and experimenting with LLMs and Agents"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.uv.workspace]
+members = [
+    "llms_101",
+    "agents_101",
+]
