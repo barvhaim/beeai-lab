@@ -76,8 +76,8 @@ def lab_4():
         "stop_sequences": ["\nQuestion:"],
     }
 
-    # model_name = "meta-llama/llama-3-3-70b-instruct"
-    model_name = "phi3"
+    model_name = "meta-llama/llama-3-3-70b-instruct"
+    # model_name = "phi3"
 
     llm = get_llm_client(
         model_name=model_name,
