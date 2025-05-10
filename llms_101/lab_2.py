@@ -73,7 +73,7 @@ SUMMARY:
     # Tasks:
     # 1. Run the lab with the default model.
     # 2. Try a smaller model, for example "phi3" or "granite3.3:2b", does it work?
-    
+
 
 if __name__ == "__main__":
     lab_2()
