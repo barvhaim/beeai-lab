@@ -55,6 +55,5 @@ Output format:
     # 1. Run the lab with the default model.
 
 
-
 if __name__ == "__main__":
     lab_1()
