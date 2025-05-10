@@ -1,5 +1,5 @@
 # 🚀🤖 LLMs, watsonx, AI Agents, etc.
-<img src="https://github.com/user-attachments/assets/3c9d563e-3a4d-4c14-941f-b04e709dc825" alt="Logo" width="500"/>
+<img src="https://github.com/user-attachments/assets/ef5acf1f-4149-41ea-87b8-f1df353c299d" alt="Logo" width="500"/>
 
 ## 📚 Overview
 This project explores the intersection of Large Language Models (LLMs), IBM watsonx.ai, and AI agents. It aims to provide tools, examples, and insights into building and deploying intelligent systems that leverage these technologies.
