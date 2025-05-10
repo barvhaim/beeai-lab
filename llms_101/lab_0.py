@@ -15,8 +15,8 @@ def lab_0():
         "top_p": 1,
     }
 
-    # model_name = "ibm/granite-13b-instruct-v2"  # watsonx.ai
-    model_name = "llama3.1:8b"  # ollama
+    model_name = "ibm/granite-13b-instruct-v2"  # watsonx.ai
+    # model_name = "llama3.1:8b"  # ollama
 
     llm = get_llm_client(
         model_name=model_name,
