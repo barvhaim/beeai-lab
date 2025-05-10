@@ -14,7 +14,7 @@ def lab_1():
         "max_tokens": 200,
         "min_tokens": 1,
         "temperature": 0.05,
-        "top_k": 10,
+        "top_k": 5,
         "top_p": 0.5,
     }
 
@@ -50,6 +50,10 @@ Output format:
     result = chain.invoke({"requirement": requirement})
 
     print(colored(result, "green"))
+
+    # Tasks:
+    # 1. Run the lab with the default model.
+
 
 
 if __name__ == "__main__":

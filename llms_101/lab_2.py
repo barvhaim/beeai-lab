@@ -1,12 +1,8 @@
-import os
 import json
-from dotenv import load_dotenv
-from langchain_ibm import WatsonxLLM
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
-
-
-load_dotenv()
+from llm_provider import get_llm_client
+from termcolor import colored
 
 
 def _load_context():
@@ -20,21 +16,21 @@ def _load_context():
 
 def lab_2():
     """
-    Using LangChain with watsonx.ai that uses prompt templates and output parsers.
+    Using LangChain with LLM that uses prompt templates and output parsers.
     This example uses a CTI report and asks the LLM to summarize it in JSON format.
     """
-    parameters = {
+    llm_parameters = {
         "decoding_method": "sample",
-        "max_new_tokens": 1024,
-        "min_new_tokens": 1,
+        "max_tokens": 1024,
+        "min_tokens": 1,
         "temperature": 0.05,
         "top_k": 5,
+        "top_p": 0.5,
     }
 
-    watsonx_llm = WatsonxLLM(
-        model_id="meta-llama/llama-3-3-70b-instruct",
-        project_id=os.getenv("WATSONX_PROJECT_ID"),
-        params=parameters,
+    llm = get_llm_client(
+        model_name="meta-llama/llama-3-3-70b-instruct",
+        model_parameters=llm_parameters,
     )
 
     # Based on https://smith.langchain.com/hub/aaronkaplan/cti-llm
@@ -69,11 +65,15 @@ SUMMARY:
         input_variables=["context"],
     )
 
-    chain = prompt | watsonx_llm | JsonOutputParser()
+    chain = prompt | llm | JsonOutputParser()
     context = _load_context()
     response = chain.invoke({"context": context})
-    print(json.dumps(response, indent=2))
+    print(colored(json.dumps(response, indent=2), "green"))
 
+    # Tasks:
+    # 1. Run the lab with the default model.
+    # 2. Try a smaller model, for example "phi3" or "granite3.3:2b", does it work?
+    
 
 if __name__ == "__main__":
     lab_2()
