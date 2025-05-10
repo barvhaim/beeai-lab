@@ -12,4 +12,6 @@ dependencies = [
     "langchain>=0.3.25",
     "langchain-ibm>=0.3.10",
     "langchain-ollama>=0.3.2",
+    "langchain-community>=0.3.23",
+    "langchain-chroma>=0.2.3",
 ]
