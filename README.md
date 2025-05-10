@@ -1,9 +1,8 @@
-# 🚀🤖 LLMs, watsonx, AI Agents, and In-Between
-
+# 🚀🤖 LLMs, watsonx, AI Agents, etc.
 <img src="https://github.com/user-attachments/assets/3c9d563e-3a4d-4c14-941f-b04e709dc825" alt="Logo" width="500"/>
 
 ## 📚 Overview
-This project explores the intersection of Large Language Models (LLMs), IBM watsonx, and AI agents. It aims to provide tools, examples, and insights into building and deploying intelligent systems that leverage these technologies.
+This project explores the intersection of Large Language Models (LLMs), IBM watsonx.ai, and AI agents. It aims to provide tools, examples, and insights into building and deploying intelligent systems that leverage these technologies.
 
 ## ✨ Features
 - 🔗 Integration with IBM watsonx for advanced AI capabilities.
@@ -29,8 +28,11 @@ This project explores the intersection of Large Language Models (LLMs), IBM wats
    ```bash
    uv sync
    ```
+3. Continue with the relevant README.md file in the relevant directory:
+* [📖 LLMs](llms_101/README.md#️-setup)
+* [🤖 AI Agents with BeeAI](agents_101/README.md#️-setup)
 
-## 🚀 Usage
+## 🚀 Using the labs
 Run the relevant example:
-* [📖 LLMs](llms_101/README.md)
-* [🤖 AI Agents with BeeAI](agents_101/README.md)
+* [📖 LLMs](llms_101/README.md#-labs)
+* [🤖 AI Agents with BeeAI](agents_101/README.md#-labs)
