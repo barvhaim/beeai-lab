@@ -49,16 +49,15 @@ def _get_base_llm_settings(model_name: str, model_parameters: Optional[Dict]) ->
 
 
 def get_llm_client(
-        model_name: str = "meta-llama/llama-3-3-70b-instruct",
-        model_parameters: Optional[Dict] = None,
+    model_name: str = "meta-llama/llama-3-3-70b-instruct",
+    model_parameters: Optional[Dict] = None,
 ) -> Any:
     if LLM_PROVIDER == LLMProviderType.WATSONX:
         from langchain_ibm import WatsonxLLM
 
         return WatsonxLLM(
             **_get_base_llm_settings(
-                model_name=model_name,
-                model_parameters=model_parameters
+                model_name=model_name, model_parameters=model_parameters
             )
         )
 

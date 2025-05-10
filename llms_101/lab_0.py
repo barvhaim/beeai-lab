@@ -18,13 +18,10 @@ def lab_0():
     model_name = "ibm/granite-13b-instruct-v2"  # watsonx.ai
     # model_name = "granite3.3:2b"  # ollama
 
-    llm = get_llm_client(
-        model_name=model_name,
-        model_parameters=llm_parameters
-    )
+    llm = get_llm_client(model_name=model_name, model_parameters=llm_parameters)
 
     response = llm.invoke("Who is man's best friend?")
-    print(colored(response, 'green'))
+    print(colored(response, "green"))
 
     # Additional tasks:
     # 1. Change the llm provider to use "granite3.3:2b" from ollama, make sure you've pulled the model before running! (`ollama pull granite3.3:2b`) and set the `.env` file to use ollama.

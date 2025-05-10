@@ -1,8 +1,8 @@
-
 from llm_provider import get_llm_client
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 from termcolor import colored
+
 
 def lab_1():
     """
@@ -21,10 +21,7 @@ def lab_1():
     model_name = "meta-llama/llama-3-3-70b-instruct"  # watsonx.ai
     # model_name = "granite3.3:2b"  # ollama
 
-    llm = get_llm_client(
-        model_name=model_name,
-        model_parameters=llm_parameters
-    )
+    llm = get_llm_client(model_name=model_name, model_parameters=llm_parameters)
 
     prompt = PromptTemplate(
         template="""
@@ -46,15 +43,13 @@ Output format:
     )
 
     # Example threat description (can be replaced with user input)
-    requirement = (
-        "A suspicious PowerShell process downloads an executable from an external IP and runs it."
-    )
+    requirement = "A suspicious PowerShell process downloads an executable from an external IP and runs it."
 
     parser = JsonOutputParser()
     chain = prompt | llm | parser
     result = chain.invoke({"requirement": requirement})
 
-    print(colored(result, 'green'))
+    print(colored(result, "green"))
 
 
 if __name__ == "__main__":

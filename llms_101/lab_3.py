@@ -34,10 +34,10 @@ def lab_3():
     print(response)
 
     chain2 = (
-            {"city": chain1, "language": itemgetter("language")}
-            | prompt2
-            | model
-            | StrOutputParser()
+        {"city": chain1, "language": itemgetter("language")}
+        | prompt2
+        | model
+        | StrOutputParser()
     )
 
     response = chain2.invoke({"person": "Elon Musk", "language": "Hebrew"})
