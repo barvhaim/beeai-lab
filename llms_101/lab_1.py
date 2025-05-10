@@ -1,52 +1,60 @@
-import os
-from dotenv import load_dotenv
-from langchain_ibm import WatsonxLLM
+
+from llm_provider import get_llm_client
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
-
-
-load_dotenv()
-
+from termcolor import colored
 
 def lab_1():
     """
-    Using LangChain with watsonx.ai that uses prompt templates and output parsers.
+    SIEM Detection Rule Generation -
+    Demonstrates how to use an LLM (via LangChain) to convert a plain-language threat description into a structured detection rule for SIEMs, along with metadata like tactic/technique, rule type, and severity.
     """
-    parameters = {
+    llm_parameters = {
         "decoding_method": "sample",
-        "max_new_tokens": 100,
-        "min_new_tokens": 1,
+        "max_tokens": 200,
+        "min_tokens": 1,
         "temperature": 0.05,
-        "top_k": 50,
-        "top_p": 1,
+        "top_k": 10,
+        "top_p": 0.5,
     }
 
-    watsonx_llm = WatsonxLLM(
-        model_id="ibm/granite-13b-instruct-v2",
-        project_id=os.getenv("WATSONX_PROJECT_ID"),
-        params=parameters,
+    model_name = "meta-llama/llama-3-3-70b-instruct"  # watsonx.ai
+    # model_name = "granite3.3:2b"  # ollama
+
+    llm = get_llm_client(
+        model_name=model_name,
+        model_parameters=llm_parameters
     )
 
     prompt = PromptTemplate(
-        template="""You are a helpful assistant that provides information about countries.
-Given a country name, provide the following information in JSON format:
-- capital
-- population
+        template="""
+You are a security assistant that generates SIEM detection rules (for Splunk, Sentinel, or Elastic) from plain-language threat descriptions. Output only the detection rule and required metadata in JSON. Do not include any explanations or comments.
 
-Input: "France"
-Output: {{
-    "capital": "Paris",
-    "population": 67081000
+Threat Description:
+{requirement}
+
+Output format:
+{{
+  "detection_rule": "<the SIEM rule in SPL, KQL, or EQL>",
+  "tactic": "<MITRE ATT&CK tactic, e.g., Exfiltration>",
+  "technique": "<MITRE ATT&CK technique, e.g., Exfiltration Over Command and Control Channel>",
+  "rule_type": "<e.g., Correlation, Threshold, Anomaly>",
+  "severity": "<e.g., Low, Medium, High, Critical>"
 }}
-
-Input: "{country}"
-Output: """,
-        input_variables=["country"],
+""",
+        input_variables=["requirement"],
     )
 
-    chain = prompt | watsonx_llm | JsonOutputParser()
-    response = chain.invoke({"country": "Israel"})
-    print(response)
+    # Example threat description (can be replaced with user input)
+    requirement = (
+        "A suspicious PowerShell process downloads an executable from an external IP and runs it."
+    )
+
+    parser = JsonOutputParser()
+    chain = prompt | llm | parser
+    result = chain.invoke({"requirement": requirement})
+
+    print(colored(result, 'green'))
 
 
 if __name__ == "__main__":
