@@ -47,3 +47,5 @@ To run a lab use `uv run <lab_filename>` for example `uv run lab_0.py`.
 - [watsonx.ai](https://watsonx.ai/)
 - [Prompting guide](https://www.promptingguide.ai)
 - [HuggingFace](https://huggingface.co/)
+- [Ollama](https://ollama.com)
+- [LangChain Hub](https://smith.langchain.com/hub/)
