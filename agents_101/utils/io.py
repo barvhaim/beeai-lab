@@ -5,6 +5,7 @@ from termcolor import colored
 
 from beeai_framework.utils.models import ModelLike, to_model_optional
 from beeai_framework.emitter import EventMeta
+from beeai_framework.errors import FrameworkError
 
 
 class ReaderOptions(BaseModel):
@@ -27,7 +28,12 @@ class ConsoleReader:
     def __next__(self) -> str:
         try:
             while True:
-                prompt = input(colored(self.input, "cyan", attrs=["bold"])).strip()
+                try:
+                    prompt = input(colored(self.input, "cyan", attrs=["bold"])).strip()
+                except EOFError:
+                    print()
+                    raise StopIteration
+
                 if not sys.stdin.isatty():
                     print(prompt)
 
@@ -41,17 +47,20 @@ class ConsoleReader:
                     continue
 
                 return prompt
-        except (EOFError, KeyboardInterrupt):
+        except KeyboardInterrupt:
             print()
-            exit()
+            raise StopIteration
 
     def write(self, role: str, data: str) -> None:
         print(colored(role, "red", attrs=["bold"]), data)
 
     def prompt(self) -> str | None:
-        for prompt in self:
-            return prompt
-        exit()
+        try:
+            for prompt in self:
+                return prompt
+            return None
+        except StopIteration:
+            return None
 
     def ask_single_question(self, query_message: str) -> str:
         answer = input(colored(query_message, "cyan", attrs=["bold"]))
