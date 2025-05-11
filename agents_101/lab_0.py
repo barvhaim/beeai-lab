@@ -30,7 +30,7 @@ def _create_agent() -> ReActAgent:
     # "watsonx:meta-llama/llama-3-3-70b-instruct"
     # with Ollama, ensure the model is pulled before running.
     # with watsonx.ai, ensure relevant ENV is set.
-    model_name = "ollama:granite3.1-dense:8b"
+    model_name = "ollama:llama3.1"
     # model_name = "watsonx:meta-llama/llama-3-3-70b-instruct"
 
     llm = ChatModel.from_name(
