@@ -18,10 +18,12 @@ from beeai_framework.agents import AgentExecutionConfig
 load_dotenv()
 
 
+# Explore MCPs on https://mcp.so/
+
 # Create MCP server parameters
 server_params = StdioServerParameters(
-    command="npx",
-    args=["-y", "@burtthecoder/mcp-virustotal"],
+    command="uv",
+    args=["--directory", "<PATH_TO>/local-mcp-virustotal", "run", "server.py"],
     env={
         "VIRUSTOTAL_API_KEY": os.environ["VIRUSTOTAL_API_KEY"],
     },
@@ -33,7 +35,7 @@ async def get_vt_tools(session: ClientSession) -> List[MCPTool]:
     filtered_tools = [
         tool
         for tool in tools
-        if tool.name.lower() in ["get_domain_report", "get_ip_report"]
+        if tool.name.lower() in ["vt_domain_report", "vt_ip_report"]  # MCP server offers multiple tools, we only need these two
     ]
     return filtered_tools
 
