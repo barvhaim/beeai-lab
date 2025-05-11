@@ -8,9 +8,7 @@ from beeai_framework.backend import ChatModel, ChatModelParameters
 from beeai_framework.errors import FrameworkError
 from beeai_framework.memory import TokenMemory
 from beeai_framework.tools import AnyTool
-from beeai_framework.tools.weather import OpenMeteoTool
-from beeai_framework.tools.search.wikipedia import WikipediaTool
-from beeai_framework.tools.search.duckduckgo import DuckDuckGoSearchTool
+from custom_tools.ti_tool import ThreatIntelligenceTool
 from beeai_framework.agents import AgentExecutionConfig
 from beeai_framework.emitter import EmitterOptions
 
@@ -39,7 +37,7 @@ def _create_agent() -> ReActAgent:
     )
 
     # Configure tools
-    tools: list[AnyTool] = [WikipediaTool(), OpenMeteoTool(), DuckDuckGoSearchTool()]
+    tools: list[AnyTool] = [ThreatIntelligenceTool()]
 
     # Create a ReAct agent with memory (https://github.com/i-am-bee/beeai-framework/blob/main/python/docs/memory.md#overview)
     # and tools (https://github.com/i-am-bee/beeai-framework/blob/main/python/docs/tools.md#built-in-tools)
@@ -47,7 +45,7 @@ def _create_agent() -> ReActAgent:
     return agent
 
 
-async def lab_0() -> None:
+async def lab_3() -> None:
     """
     Example of using the ReAct agent with a weather tool, Wikipedia tool and DuckDuckGo search tool.
     """
@@ -77,7 +75,7 @@ async def lab_0() -> None:
 
 if __name__ == "__main__":
     try:
-        asyncio.run(lab_0())
+        asyncio.run(lab_3())
     except FrameworkError as e:
         traceback.print_exc()
         sys.exit(e.explain())

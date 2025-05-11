@@ -1,9 +1,10 @@
 import sys
-
+from typing import Any
 from pydantic import BaseModel
 from termcolor import colored
 
 from beeai_framework.utils.models import ModelLike, to_model_optional
+from beeai_framework.emitter import EventMeta
 
 
 class ReaderOptions(BaseModel):
@@ -55,3 +56,17 @@ class ConsoleReader:
     def ask_single_question(self, query_message: str) -> str:
         answer = input(colored(query_message, "cyan", attrs=["bold"]))
         return answer.strip()
+
+
+def process_agent_events(reader: ConsoleReader, data: Any, event: EventMeta) -> None:
+    """Process agent events and log appropriately"""
+    if event.name == "error":
+        reader.write("Agent 🤖 : ", FrameworkError.ensure(data.error).explain())
+    elif event.name == "retry":
+        reader.write("Agent 🤖 : ", "retrying the action...")
+    elif event.name == "update":
+        reader.write(f"Agent({data.update.key}) 🤖 : ", data.update.parsed_value)
+    # elif event.name == "start":
+    #     reader.write("Agent 🤖 : ", "starting new iteration")
+    # elif event.name == "success":
+    #     reader.write("Agent 🤖 : ", "success")

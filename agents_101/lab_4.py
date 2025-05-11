@@ -11,7 +11,7 @@ from beeai_framework.workflows.agent import AgentWorkflow, AgentWorkflowInput
 from utils.io import ConsoleReader
 
 
-async def main() -> None:
+async def lab_4() -> None:
     llm = ChatModel.from_name("ollama:llama3.1")
     workflow = AgentWorkflow(name="Smart assistant")
     reader = ConsoleReader()
@@ -59,11 +59,17 @@ async def main() -> None:
         )
         .on(
             # Event Matcher -> match agent's 'success' events
-            lambda event: isinstance(event.creator, ChatModel) and event.name == "success",
+            lambda event: isinstance(event.creator, ChatModel)
+            and event.name == "success",
             # log data to the console
             lambda data, event: reader.write(
                 "->Got response from the LLM",
-                "  \n->".join([str(message.content[0].model_dump()) for message in data.value.messages]),
+                "  \n->".join(
+                    [
+                        str(message.content[0].model_dump())
+                        for message in data.value.messages
+                    ]
+                ),
             ),
             EmitterOptions(match_nested=True),
         )
@@ -79,7 +85,7 @@ async def main() -> None:
 
 if __name__ == "__main__":
     try:
-        asyncio.run(main())
+        asyncio.run(lab_4())
     except FrameworkError as e:
         traceback.print_exc()
         sys.exit(e.explain())

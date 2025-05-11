@@ -1,4 +1,4 @@
-# Lab 3 - Connecting with BeeAI Platform
+# Lab 5 - Connecting with BeeAI Platform
 
 ## Agent provider template
 Provide a template for creating an agent provider. This template can be used to create a new agent provider repository.

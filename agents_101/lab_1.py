@@ -11,7 +11,6 @@ from beeai_framework.agents.react import ReActAgent
 from beeai_framework.backend import ChatModel, ChatModelParameters
 from beeai_framework.errors import FrameworkError
 from beeai_framework.tools.mcp import MCPTool
-from beeai_framework.tools.search.wikipedia import WikipediaTool
 from beeai_framework.agents import AgentExecutionConfig
 from beeai_framework.emitter import EmitterOptions
 from beeai_framework.memory import TokenMemory
@@ -27,20 +26,24 @@ reader = ConsoleReader()
 
 # Create MCP server parameters
 server_params = StdioServerParameters(
-    command="npx",
-    args=["-y", "tavily-mcp"],  # Requires Node.js to run
+    command="uv",
+    args=["--directory", "mcp_tools/local-mcp-virustotal", "run", "server.py"],
     env={
-        "TAVILY_API_KEY": os.environ["TAVILY_API_KEY"],
+        "VIRUSTOTAL_API_KEY": os.environ["VIRUSTOTAL_API_KEY"],
     },
 )
 
 
-async def _get_tavily_tools(session: ClientSession) -> List[MCPTool]:
+async def _get_vt_tools(session: ClientSession) -> List[MCPTool]:
     tools: List[MCPTool] = await MCPTool.from_client(session)
     filtered_tools = [
         tool
         for tool in tools
-        if tool.name.lower() in ["tavily-search"]  # MCP server offers multiple tools
+        if tool.name.lower()
+        in [
+            "vt_domain_report",
+            "vt_ip_report",
+        ]  # MCP server offers multiple tools, we only need these two
     ]
     return filtered_tools
 
@@ -61,18 +64,17 @@ async def _create_agent(session: ClientSession) -> ReActAgent:
         ChatModelParameters(temperature=0),
     )
 
-    tavily_tools = await _get_tavily_tools(session)
-    tools = [WikipediaTool()] + tavily_tools
+    vt_tools = await _get_vt_tools(session)
 
     agent = ReActAgent(
         llm=llm,
-        tools=tools,
+        tools=vt_tools,
         memory=TokenMemory(llm),
     )
     return agent
 
 
-async def lab_2() -> None:
+async def lab_1() -> None:
     """
     Example of using the ReAct agent with a weather tool and a Wikipedia search tool.
     """
@@ -84,7 +86,7 @@ async def lab_2() -> None:
         await session.initialize()
         agent = await _create_agent(session)
 
-        reader.write("🛠️ System: ", "Agent initialized with Tavily tools.")
+        reader.write("🛠️ System: ", "Agent initialized with VirusTotal tools.")
 
         # Main interaction loop with user input
         for prompt in reader:
@@ -92,7 +94,7 @@ async def lab_2() -> None:
             response = await agent.run(
                 prompt=prompt,
                 execution=AgentExecutionConfig(
-                    max_retries_per_step=3, total_max_retries=10, max_iterations=10
+                    max_retries_per_step=3, total_max_retries=10, max_iterations=20
                 ),
             ).on(
                 "*",
@@ -105,7 +107,7 @@ async def lab_2() -> None:
 
 if __name__ == "__main__":
     try:
-        asyncio.run(lab_2())
+        asyncio.run(lab_1())
     except FrameworkError as e:
         traceback.print_exc()
         sys.exit(e.explain())
