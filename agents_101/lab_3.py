@@ -47,13 +47,13 @@ def _create_agent() -> ReActAgent:
 
 async def lab_3() -> None:
     """
-    Example of using the ReAct agent with a weather tool, Wikipedia tool and DuckDuckGo search tool.
+    Example of using the ReAct agent with a custom Threat Intelligence tool.
     """
 
     agent = _create_agent()
 
     reader.write(
-        "🛠️ System: ", "Agent initialized with Wikipedia, DuckDuckGo, and Weather tools."
+        "🛠️ System: ", "Agent initialized with a custom Threat Intelligence tool."
     )
 
     # Main interaction loop with user input
