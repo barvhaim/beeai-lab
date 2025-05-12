@@ -45,8 +45,7 @@ Output format:
     # Example threat description (can be replaced with user input)
     requirement = "A suspicious PowerShell process downloads an executable from an external IP and runs it."
 
-    parser = JsonOutputParser()
-    chain = prompt | llm | parser
+    chain = prompt | llm | JsonOutputParser()
     result = chain.invoke({"requirement": requirement})
 
     print(colored(result, "green"))

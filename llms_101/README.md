@@ -37,8 +37,9 @@ To run a lab use `uv run <lab_filename>` for example `uv run lab_0.py`.
 - [Lab 0](./lab_0.py) - **Sanity check for LLM**: This lab demonstrates a basic invocation of the LLM to ensure it is running correctly.
 - [Lab 1](./lab_1.py) - **SIEM Detection Rule Generation**: This lab uses a prompt template to convert a plain-language threat description into a structured detection rule for SIEMs, along with metadata like tactic/technique, rule type, and severity.
 - [Lab 2](./lab_2.py) - **Summarizing CTI reports**: This lab uses a CTI report as input and generates a structured JSON summary using a prompt template and output parser.
-- [Lab 3](./lab_3.py) - **Chained prompts for contextual queries**: This lab demonstrates the use of chained prompts to answer contextual queries, such as determining a person's city of origin and the country of that city in a specified language.
-- [Lab 4](./lab_4.py) - **RAG (Retrieval-Augmented Generation)**: This lab demonstrates how to create a simple RAG system that can answer questions about cyber threats based on a local knowledge base of security reports.
+- [Lab 3](./lab_3.py) - **Few-Shot Prompting**: This lab demonstrates how to use few-shot prompting with examples to guide an LLM to produce structured, consistent outputs for cybersecurity incident response analysis.
+- [Lab 4](./lab_4.py) - **Chained prompts for contextual queries**: This lab demonstrates the use of chained prompts to answer contextual queries, such as determining a person's city of origin and the country of that city in a specified language.
+- [Lab 5](./lab_5.py) - **RAG (Retrieval-Augmented Generation)**: This lab demonstrates how to create a simple RAG system that can answer questions about cyber threats based on a local knowledge base of security reports.
 
 ## 📖 Further readings
 - ["Attention is All You Need" paper](https://arxiv.org/abs/1706.03762)
