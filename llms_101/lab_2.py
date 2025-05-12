@@ -26,6 +26,7 @@ def lab_2():
         "temperature": 0.05,
         "top_k": 5,
         "top_p": 0.5,
+        "stop_sequences": ["\nREQUEST:", "\n}"],
     }
 
     llm = get_llm_client(
@@ -37,6 +38,7 @@ def lab_2():
     prompt = PromptTemplate(
         template="""Please summarize the following report according to the following REQUEST.
 Use JSON format with the keys "summary", "attacker", "victim", "tools", "TTPs", "CVEs", "why (motivation)", "when_first_discovered", "last_time_observed", "what_are_they_targetting", "mitigation_recommendation", "how_to_detect (IoCs)".
+Return only the JSON object, no additional text.
 
 REQUEST:
 1. Summarize the main points as bullet points (as a list of strings). The summary is for high level management, not a technical audience. Keep it simple and understandable. Keep it short and concise. Make it less technical. Focus on the implications.

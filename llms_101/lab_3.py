@@ -18,7 +18,7 @@ def lab_3():
         "temperature": 0.1,
         "top_k": 5,
         "top_p": 0.5,
-        "stop_sequences": ["\nInput:"],
+        "stop_sequences": ["\nInput:", "\n\n"],
     }
 
     model_name = "meta-llama/llama-3-3-70b-instruct"  # watsonx.ai
