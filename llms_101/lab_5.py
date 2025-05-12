@@ -73,7 +73,7 @@ def lab_5():
         "min_new_tokens": 1,
         "temperature": 0.05,
         "top_k": 10,
-        "stop_sequences": ["\nQuestion:"],
+        "stop_sequences": ["\nQuestion:", "\nContext:"],
     }
 
     model_name = "meta-llama/llama-3-3-70b-instruct"
