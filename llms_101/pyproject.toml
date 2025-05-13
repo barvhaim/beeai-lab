@@ -13,7 +13,6 @@ dependencies = [
     "langchain-ibm>=0.3.10",
     "langchain-ollama>=0.3.2",
     "langchain-community>=0.3.23",
-    "langchain-chroma>=0.2.3",
     "pyyaml>=6.0.2",
     "jinja2>=3.1.6",
     "langsmith>=0.3.42",

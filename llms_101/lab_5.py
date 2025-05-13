@@ -18,6 +18,8 @@ from llm_provider import get_llm_client
 from llm_provider.embeddings_model import get_embeddings_model
 
 
+# Currently MacOS/Linux only, add `langchain-chroma` with `uv add langchain-chroma` before running this lab
+
 def _load_documents(file_path: str) -> List[Document]:
     """
     Load documents from a text file and split them into chunks.
