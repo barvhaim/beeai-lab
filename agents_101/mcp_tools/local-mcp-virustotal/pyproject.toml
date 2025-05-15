@@ -1,0 +1,13 @@
+[project]
+name = "local-mcp-virustotal"
+version = "0.1.0"
+description = "VirusTotal MCP Server"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+dependencies = [
+    "aiohttp==3.11.13",
+    "black>=25.1.0",
+    "mcp>=1.8.0",
+    "python-dotenv==1.0.1",
+]
